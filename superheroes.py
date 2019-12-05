@@ -1,13 +1,5 @@
 import random
 
-class Hero:
-    def __init__(self, name, starting_health=100):
-        self.abilities = []
-        self.armors = []
-        self.name = name
-        self.starting_health = starting_health
-        self.current_health = starting_health
-
 class Ability:
     def __init__(self, name, max_damage):
         self.name = name
@@ -27,11 +19,41 @@ class Armor:
         random_block = random.randint(0, self.max_block)
         return random_block #self.max_block
 
+class Hero:
+    def __init__(self, name, starting_health=100):
+        self.abilities = []
+        self.armors = []
+        self.name = name
+        self.starting_health = starting_health
+        self.current_health = starting_health
+    
+    def add_ability(self, ability):
+        self.abilities.append(ability)
+    
+    def add_armor(self, armor):
+        self.armors.append(armor)
+    
+    def attack(self):
+        return sum(ability.attack() for ability in self.abilities)
+
+    def defend(self, damage_amt):
+        return sum(armor.block() for armor in self.armors)
+
 if __name__ == "__main__":
-    ability = Ability("Debugging Ability", 20)
+    ability = Ability("Great Debugging", 50)
+    another_ability = Ability("Smarty Pants", 90)
+    hero = Hero("Sophocles", 200)
+    hero.add_ability(ability)
+    hero.add_ability(another_ability)
+    print(hero.abilities)
     print(ability.name)
     print(ability.attack())
-
+    print(hero.attack())
+    ##########
     armor = Armor("Debugging Shield", 10)
     print(armor.name)
     print(armor.block())
+    ##########
+    my_hero = Hero("Sophocles", 200)
+    print(my_hero.name)
+    print(my_hero.current_health)
