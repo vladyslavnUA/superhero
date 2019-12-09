@@ -22,7 +22,8 @@ class Armor:
 
 class Weapon(Ability):
     def attack(self):
-        
+        wattack = randint(self.max_damage//2, self.max_damage)
+        return wattack
 
 class Hero:
     def __init__(self, name, starting_health=100):
@@ -246,10 +247,13 @@ if __name__ == "__main__":
 
         if again == 'y':
             game = True
+
         else:
             arena.ateam.save_the_heroes()
             arena.bteam.save_the_heroes()
-
+    if game == False:
+        again
+        
     ##########
 
     # TESTS
