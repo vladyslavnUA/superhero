@@ -45,10 +45,10 @@ class Hero:
     def add_armor(self, armor):
         self.armors.append(armor)
     
-    def kills(self, kills):
+    def og_kills(self, kills):
         self.kills += num_of_kills
     
-    def deaths(self, num_of_deaths):
+    def og_deaths(self, num_of_deaths):
         self.deaths += num_of_deaths
 
     def add_weapon(self, weapon):
@@ -82,12 +82,12 @@ class Hero:
                 self.take_damage(opponent.attack())
                 
                 if opponent.is_alive() == False:
-                    self.kills(1)
-                    opponent.deaths(1)
+                    self.og_kills(1)
+                    opponent.og_deaths(1)
                     print('[ ' + self.name + ' won this round ]')
                 else:
-                    self.kills(1)
-                    self.deaths(1)
+                    self.og_kills(1)
+                    self.og_deaths(1)
                     print('[ ' + opponent.name + ' won this round ]')
             else:
                 print('[ draw ]')
@@ -97,13 +97,7 @@ class Team:
     def __init__(self, name):
         self.name = name
         self.heroes = []
-    
-    def pop_hero(self, name):
-        for hero in self.heroes:
-            if name == hero.name:
-                self.heroes.remove(hero)
-        return 0
-    
+
     def index_heroes(self):
         for hero in self.heroes:
             print(hero.name)
@@ -111,12 +105,58 @@ class Team:
     def append_hero(self, hero):
         self.heroes.append(hero)
 
+    def pop_hero(self, name):
+        for hero in self.heroes:
+            if name == hero.name:
+                self.heroes.remove(hero)
+        return 0
+
+    def live_heroes(self):
+        live_heroes = []
+        for hero in self.heroes:
+            if hero.is_alive():
+                live_heroes.append(hero)
+            return live_heroes
+
     def attack(self, oteam):
         while len(self.live_heroes()) > 0 and len(oteam.live_heroes()) > 0:
             ateam = random.choice(self.live_heroes())
             bteam = random.choice(oteam.live_heroes())
             #make 'em fight
             ateam.fight(bteam)
+    
+    def save_the_heroes(self, health=100):
+        for hero in self.heroes:
+            hero.current_health = hero.starting_health
+    
+    def stats(self):
+        for hero in self.heroes:
+            print("hero: " + hero.name)
+            print("# of kills: " + str(hero.kills))
+            print("# of deaths: {}".format(hero.deaths))
+
+class Arena:
+    def __init__(self):
+        self.ateam = Team("team uno")
+        self.bteam = Team("team dos")
+
+    def create_ability(self):
+        ab_name = input("enter ability name: ")
+        ab_pwr = input("enter the ability's power (integer): ")
+        return Ability(ab_name, int(ab_pwr))
+
+    def create_weapon(self):
+        wep_name = input("enter the weapon's name: ")
+        wep_pwr = input("enter the weapon's power (integer): ")
+        return Weapon(wep_name, int(wep_pwr))
+    
+    def create_armor(self):
+        arm_name = input("enter the armor's name: ")
+        arm_pwr = input("enter the armor's power (integer): ")
+        return Armor(arm_name, int(arm_pwr))
+
+
+
 
 if __name__ == "__main__":
     ability = Ability("Great Debugging", 50)
