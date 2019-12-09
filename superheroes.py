@@ -37,6 +37,7 @@ class Hero:
     def take_damage(self, damage):
         defense = self.defend()
         self.current_health -= damage - defense
+        return self.current_health
 
     def add_ability(self, ability):
         self.abilities.append(ability)
@@ -44,7 +45,7 @@ class Hero:
     def add_armor(self, armor):
         self.armors.append(armor)
     
-    def add_kills(self, kills):
+    def kills(self, kills):
         self.kills += num_of_kills
     
     def deaths(self, num_of_deaths):
@@ -75,8 +76,22 @@ class Hero:
             return False
     
     def fight(self, opponent):
-        while True:
-      
+        while self.is_alive() == True and opponent.is_alive() == True:
+            if len(self.abilities) > 0 or len(opponent.abilities) > 0:
+                opponent.take_damage(self.attack())
+                self.take_damage(opponent.attack())
+                
+                if opponent.is_alive() == False:
+                    self.kills(1)
+                    opponent.deaths(1)
+                    print('[ ' + self.name + ' won this round ]')
+                else:
+                    self.kills(1)
+                    self.deaths(1)
+                    print('[ ' + opponent.name + ' won this round ]')
+            else:
+                print('[ draw ]')
+                return False
 
 if __name__ == "__main__":
     ability = Ability("Great Debugging", 50)
