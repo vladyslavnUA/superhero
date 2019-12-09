@@ -27,6 +27,10 @@ class Hero:
         self.starting_health = starting_health
         self.current_health = starting_health
     
+    def take_damage(self, damage):
+        defense = self.defend()
+        self.current_health -= damage - defense
+
     def add_ability(self, ability):
         self.abilities.append(ability)
     
@@ -38,6 +42,16 @@ class Hero:
 
     def defend(self, damage_amt):
         return sum(armor.block() for armor in self.armors)
+
+    def is_alive(self):
+        if self.current_health > 0:
+            return True
+        else:
+            return False
+    
+    def fight(self, opponent):
+        while True:
+            
 
 if __name__ == "__main__":
     ability = Ability("Great Debugging", 50)
@@ -51,9 +65,16 @@ if __name__ == "__main__":
     print(hero.attack())
     ##########
     armor = Armor("Debugging Shield", 10)
+    shield = Armor("[shield_ls_1]", 20)
     print(armor.name)
     print(armor.block())
     ##########
     my_hero = Hero("Sophocles", 200)
     print(my_hero.name)
     print(my_hero.current_health)
+    ##########
+    hero = Hero("Themistoklis", 200)
+    hero.take_damage(150)
+    print(hero.is_alive())
+    hero.take_damage(15000)
+    print(hero.is_alive())
