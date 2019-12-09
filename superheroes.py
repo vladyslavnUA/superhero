@@ -108,6 +108,7 @@ class Team:
         for hero in self.heroes:
             if name == hero.name:
                 self.heroes.remove(hero)
+                return 1
         return 0
 
     def live_heroes(self):
