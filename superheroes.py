@@ -1,4 +1,5 @@
 import random
+from random import randint
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -7,8 +8,8 @@ class Ability:
         # self.attack_strength = attack_strength
 
     def attack(self):
-        random_value = random.randint(0, self.max_damage)
-        return random_value
+        random_attack = random.randint(0, self.max_damage)
+        return random_attack
 
 class Armor:
     def __init__(self, name, max_block):
@@ -17,7 +18,11 @@ class Armor:
 
     def block(self):
         random_block = random.randint(0, self.max_block)
-        return random_block #self.max_block
+        return random_block
+
+class Weapon(Ability):
+    def attack(self):
+        
 
 class Hero:
     def __init__(self, name, starting_health=100):
@@ -26,6 +31,8 @@ class Hero:
         self.name = name
         self.starting_health = starting_health
         self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0
     
     def take_damage(self, damage):
         defense = self.defend()
@@ -37,11 +44,29 @@ class Hero:
     def add_armor(self, armor):
         self.armors.append(armor)
     
-    def attack(self):
-        return sum(ability.attack() for ability in self.abilities)
+    def add_kills(self, kills):
+        self.kills += num_of_kills
+    
+    def deaths(self, num_of_deaths):
+        self.deaths += num_of_deaths
 
-    def defend(self, damage_amt):
-        return sum(armor.block() for armor in self.armors)
+    def add_weapon(self, weapon):
+        self.abilities.append(weapon)
+    
+    def attack(self):
+        to_attack = 0
+        for ability in self.abilities:
+            to_attack += ability.attack()
+        return to_attack
+
+    def defend(self, damage_amt=0):
+        to_block = 0
+        for armor in self.armors:
+            to_block += armor.block()
+        return to_block
+    
+    def current_health(self):
+        return self.current_health
 
     def is_alive(self):
         if self.current_health > 0:
@@ -51,7 +76,7 @@ class Hero:
     
     def fight(self, opponent):
         while True:
-            
+      
 
 if __name__ == "__main__":
     ability = Ability("Great Debugging", 50)
