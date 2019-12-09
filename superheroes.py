@@ -126,7 +126,7 @@ class Team:
     
     def save_the_heroes(self, health=100):
         for hero in self.heroes:
-            hero.current_health = hero.starting_health
+            hero.health = hero.starting_health
     
     def stats(self):
         for hero in self.heroes:
