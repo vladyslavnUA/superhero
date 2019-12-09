@@ -48,7 +48,7 @@ class Hero:
         self.kills += kills
     
     def og_deaths(self, num_of_deaths):
-        self.deaths += deaths
+        self.deaths += num_of_deaths
 
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
