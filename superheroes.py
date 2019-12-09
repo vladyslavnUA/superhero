@@ -178,30 +178,102 @@ class Arena:
             arm
         return newhero
 
+    def construct_ateam(self):
+        hamt = input("# of heroes in team uno: ")
+        for i in range(0, int(hamt)):
+            self.ateam.append_hero(self.create_hero())
+    
+    def construct_bteam(self):
+        bamt = input("# of heroes in team dos: ")
+        for i in range(0, int(bamt)):
+            self.bteam.append_hero(self.create_hero())
+    
+    def battle(self):
+        self.ateam.attack(self.bteam)
+    
+    def tdeaths(self, live_team):
+        tdeaths = 0
+        for hero in live_team:
+            if hero.current_health == 0:
+                tdeaths += 1
+        if tdeaths == len(live_team):
+            return True
+        else:
+            return False
+    
+    def display(self):
+        ateam = self.tdeaths(self.ateam.heroes)
+        bteam = self.tdeaths(self.bteam.heroes)
 
+        if ateam == False:
+            print(f"the winner of this match is {self.ateam.name}")
+            print("survivors of team one: ")
+            for hero in live_heroes:
+                if hero.is_alive():
+                    print(hero.name)
+                else:
+                    print('everyone is dead')
+
+        elif bteam == False:
+            print(f"the winner of this match is {self.bteam.name}")
+            print("survivors of team two: ")
+            for hero in self.bteam.live_heroes:
+                if hero.is_alive():
+                    print(hero.name)
+                else:
+                    print('everyone is dead')
+        elif ateam == False and bteam == False:
+            print("draw!")
+
+        print(f'team uno kill/death ratio: {self.ateam.stats()}')
+        print(f'team dos kill/death ratio: {self.bteam.stats()}')
 
 if __name__ == "__main__":
-    ability = Ability("Great Debugging", 50)
-    another_ability = Ability("Smarty Pants", 90)
-    hero = Hero("Sophocles", 200)
-    hero.add_ability(ability)
-    hero.add_ability(another_ability)
-    print(hero.abilities)
-    print(ability.name)
-    print(ability.attack())
-    print(hero.attack())
+
+    #start game
+    game = True
+    arena = Arena()
+
+    arena.construct_ateam()
+    arena.construct_bteam()
+
+    while game:
+
+        arena.battle()
+        arena.display()
+
+        again = input('wanna play again? (y or n) ').lower()
+
+        if again == 'y':
+            game = True
+        else:
+            arena.ateam.save_the_heroes()
+            arena.bteam.save_the_heroes()
+
     ##########
-    armor = Armor("Debugging Shield", 10)
-    shield = Armor("[shield_ls_1]", 20)
-    print(armor.name)
-    print(armor.block())
+
+    # TESTS
+    # ability = Ability("Great Debugging", 50)
+    # another_ability = Ability("Smarty Pants", 90)
+    # hero = Hero("Sophocles", 200)
+    # hero.add_ability(ability)
+    # hero.add_ability(another_ability)
+    # print(hero.abilities)
+    # print(ability.name)
+    # print(ability.attack())
+    # print(hero.attack())
     ##########
-    my_hero = Hero("Sophocles", 200)
-    print(my_hero.name)
-    print(my_hero.current_health)
+    # armor = Armor("Debugging Shield", 10)
+    # shield = Armor("[shield_ls_1]", 20)
+    # print(armor.name)
+    # print(armor.block())
     ##########
-    hero = Hero("Themistoklis", 200)
-    hero.take_damage(150)
-    print(hero.is_alive())
-    hero.take_damage(15000)
-    print(hero.is_alive())
+    # my_hero = Hero("Sophocles", 200)
+    # print(my_hero.name)
+    # print(my_hero.current_health)
+    ##########
+    # hero = Hero("Themistoklis", 200)
+    # hero.take_damage(150)
+    # print(hero.is_alive())
+    # hero.take_damage(15000)
+    # print(hero.is_alive())
