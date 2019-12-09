@@ -17,13 +17,11 @@ class Armor:
         self.max_block = max_block
 
     def block(self):
-        random_block = random.randint(0, self.max_block)
-        return random_block
+        return random.randint(0, self.max_block)
 
 class Weapon(Ability):
     def attack(self):
-        wattack = randint(self.max_damage//2, self.max_damage)
-        return wattack
+        return randint(self.max_damage//2, self.max_damage)
 
 class Hero:
     def __init__(self, name, starting_health=100):
@@ -47,10 +45,10 @@ class Hero:
         self.armors.append(armor)
     
     def og_kills(self, kills):
-        self.kills += num_of_kills
+        self.kills += kills
     
     def og_deaths(self, num_of_deaths):
-        self.deaths += num_of_deaths
+        self.deaths += deaths
 
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
@@ -88,7 +86,7 @@ class Hero:
                     print('[ ' + self.name + ' won this round ]')
                 else:
                     self.og_kills(1)
-                    self.og_deaths(1)
+                    opponent.og_deaths(1)
                     print('[ ' + opponent.name + ' won this round ]')
             else:
                 print('[ draw ]')
@@ -253,7 +251,7 @@ if __name__ == "__main__":
             arena.bteam.save_the_heroes()
     if game == False:
         again
-        
+
     ##########
 
     # TESTS
