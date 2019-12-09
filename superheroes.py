@@ -93,6 +93,31 @@ class Hero:
                 print('[ draw ]')
                 return False
 
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.heroes = []
+    
+    def pop_hero(self, name):
+        for hero in self.heroes:
+            if name == hero.name:
+                self.heroes.remove(hero)
+        return 0
+    
+    def index_heroes(self):
+        for hero in self.heroes:
+            print(hero.name)
+    
+    def append_hero(self, hero):
+        self.heroes.append(hero)
+
+    def attack(self, oteam):
+        while len(self.live_heroes()) > 0 and len(oteam.live_heroes()) > 0:
+            ateam = random.choice(self.live_heroes())
+            bteam = random.choice(oteam.live_heroes())
+            #make 'em fight
+            ateam.fight(bteam)
+
 if __name__ == "__main__":
     ability = Ability("Great Debugging", 50)
     another_ability = Ability("Smarty Pants", 90)
